@@ -153,11 +153,11 @@ const ChoiceButton = ({ name = '', content = '', answer = '', choice, setChoice,
                     {
                       choice === name ?
                         <div className='text-center'>
-                          {Math.floor((userNum + 1) / (totalUser + 1) * 100)}%
+                          {Math.floor((userNum || 0 + 1) / (totalUser || 0 + 1) * 100)}%
                         </div>
                         :
                         <div className='text-center'>
-                          {Math.floor(userNum / (totalUser + 1) * 100)}%
+                          {Math.floor(userNum || 0 / (totalUser || 0 + 1) * 100)}%
                         </div>
                     }
                   </div>
@@ -165,9 +165,9 @@ const ChoiceButton = ({ name = '', content = '', answer = '', choice, setChoice,
                 <div className='relative flex items-center h-32'>
                   {
                     choice === name ?
-                      <div className='bg-[#DBDB3559] absolute h-full' style={{ width: `${Math.floor((userNum + 1) / (totalUser + 1) * 100)}%` }} />
+                      <div className='bg-[#DBDB3559] absolute h-full' style={{ width: `${Math.floor((userNum || 0 + 1) / (totalUser || 0 + 1) * 100)}%` }} />
                       :
-                      <div className='bg-[#DBDB3559] absolute h-full' style={{ width: `${Math.floor(userNum / (totalUser + 1) * 100)}%` }} />
+                      <div className='bg-[#DBDB3559] absolute h-full' style={{ width: `${Math.floor(userNum || 0 / (totalUser || 0 + 1) * 100)}%` }} />
                   }
                   <div className='pl-10 text-gray-500 text-[28px]'>{content}</div>
                 </div>
