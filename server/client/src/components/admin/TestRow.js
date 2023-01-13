@@ -38,11 +38,11 @@ const TestRow = ({ test = {}, no = '' }) => {
       <div className='flex flex-row gap-3 items-center'>
         <div className='text-xl text-gray-500'>Dificultad</div>
         <div className='flex flex-row gap-1 items-center'>
-          <img src='/assets/icons/star.png' alt='star' />
-          <img src='/assets/icons/star.png' alt='star' />
-          <img src='/assets/icons/star.png' alt='star' />
-          <img src='/assets/icons/star2.png' alt='star' />
-          <img src='/assets/icons/star2.png' alt='star' />
+          <img src='/assets/icons/Star.png' alt='star' />
+          <img src='/assets/icons/Star.png' alt='star' />
+          <img src='/assets/icons/Star.png' alt='star' />
+          <img src='/assets/icons/Star2.png' alt='star' />
+          <img src='/assets/icons/Star2.png' alt='star' />
         </div>
       </div>
       <div className='text-gray-500 text-xl'>Preguntas: {display(test.total)}</div>
