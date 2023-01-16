@@ -11,11 +11,6 @@ const fs = require('fs')
 const path = require('path')
 const https = require('https')
 
-var privateKey = fs.readFileSync('./certificate/autoapp.key', 'utf8');
-var certificate = fs.readFileSync('./certificate/autoapp.crt', 'utf8');
-var credentials = { key: privateKey, cert: certificate };
-var httpsServer = https.createServer(credentials, app);
-
 const port = process.env.PORT || 5000
 
 app.use(fileupload());
@@ -43,7 +38,13 @@ app.use('/api', Routes)
 // app.listen(port, () => {
 //   console.log(`Server is listenting at http://localhost:${port}`)
 // })
+
+var privateKey = fs.readFileSync('./certificate/autoapp.key', 'utf8');
+var certificate = fs.readFileSync('./certificate/autoapp.crt', 'utf8');
+var credentials = { key: privateKey, cert: certificate };
+var httpsServer = https.createServer(credentials, app);
+
 httpsServer.listen(port, () => {
-  console.log(`Server is listenting at http://localhost:${port}`)
+  console.log(`Server is listenting at ${port}`)
 })
 
