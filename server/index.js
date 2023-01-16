@@ -11,8 +11,8 @@ const fs = require('fs')
 const path = require('path')
 const https = require('https')
 
-var privateKey = fs.readFileSync('./certificate/autoapp.crt', 'utf8');
-var certificate = fs.readFileSync('./certificate/autoapp.key', 'utf8');
+var privateKey = fs.readFileSync('./certificate/autoapp.key', 'utf8');
+var certificate = fs.readFileSync('./certificate/autoapp.crt', 'utf8');
 var credentials = { key: privateKey, cert: certificate };
 var httpsServer = https.createServer(credentials, app);
 
