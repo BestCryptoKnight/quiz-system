@@ -61,6 +61,7 @@ export function AuthProvider({ children }) {
       } = await axios.get("api/auth/getAccount", {
         headers: {
           authorization: `Bearer ${token}`,
+
         },
       });
 
@@ -90,6 +91,7 @@ export function AuthProvider({ children }) {
       const response = await axios.post('api/auth/changeAccount', formData, {
         headers: {
           authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data'
         },
       });
 

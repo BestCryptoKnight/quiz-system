@@ -7,15 +7,15 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const fileupload = require("express-fileupload");
 
-const port = process.env.PORT || 5000
-
+const port = 5000
 app.use(fileupload());
 app.use(cors())
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 
-const uri = process.env.DRIVING_URI || 'mongodb+srv://drivingschool:3eUdrvjYGaTeibQ8@cluster0.sfea2sq.mongodb.net/myFirstDatabase';
+// const uri = process.env.DRIVING_URI || 'mongodb+srv://drivingschool:3eUdrvjYGaTeibQ8@cluster0.sfea2sq.mongodb.net/myFirstDatabase';
+const uri = 'mongodb://localhost:27017/DrivingSchool'
 
 try {
   mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, () => console.log("Mongoose is connected."));

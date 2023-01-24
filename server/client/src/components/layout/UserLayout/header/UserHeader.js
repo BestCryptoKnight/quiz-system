@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { FaSearch, FaRegBell, FaRegClipboard } from 'react-icons/fa'
 import { useAuth } from '../../../../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
+import Avatar from 'react-avatar'
 
 const UserHeader = () => {
   const { isLoggedIn, logout, account } = useAuth()
@@ -15,6 +16,10 @@ const UserHeader = () => {
 
   const handleLogoutClick = () => {
     logout()
+  }
+
+  const handleProfileClick = () => {
+    navigate('/user/profile')
   }
 
   const handleToggle = () => {
@@ -31,7 +36,7 @@ const UserHeader = () => {
           <p className='text-2xl font-bold'>Comunidad</p>
         </div>
       </div>
-      <div className='flex flex-row gap-6'>
+      <div className='flex flex-row gap-6 items-center'>
         <div className='flex flex-row gap-4 text-xl'>
           <FaSearch />
           <div className="bg-gray-300 w-0.5"></div>
@@ -45,11 +50,12 @@ const UserHeader = () => {
         {
           isLoggedIn ?
             <div className='transition-200 relative' onMouseLeave={() => setClicked(false)}>
-              <img className='w-7 h-7 rounded-full cursor-pointer' src={account.image} alt='' onClick={handleToggle} />
+              <Avatar className='cursor-pointer' name={account.name} size='30' round='20px' src={account.image} alt='' onClick={handleToggle} />
               {
                 clicked ?
-                  <div className=''>
-                    <div className='cursor-pointer absolute' onClick={handleLogoutClick}>LogOut</div>
+                  <div className='flex flex-col absolute shadow-md rounded-sm'>
+                    <div className='cursor-pointer hover:bg-gray-300 py-1 px-3' onClick={handleProfileClick}>Profile</div>
+                    <div className='cursor-pointer hover:bg-gray-300 py-1 px-3' onClick={handleLogoutClick}>LogOut</div>
                   </div>
                   :
                   <></>

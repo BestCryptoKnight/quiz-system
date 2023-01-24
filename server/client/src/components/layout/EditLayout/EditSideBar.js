@@ -3,8 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import CreateButton from '../Common/Create'
 import UpdateButton from './Update'
 import QuestionButton from '../Common/Question'
-import { useSelector, useDispatch } from 'react-redux'
-import { getProblems } from '../../../actions/problem'
+import { useSelector } from 'react-redux'
 
 const EditSideBar = () => {
   const { id } = useParams()
@@ -15,10 +14,10 @@ const EditSideBar = () => {
   const [lists, setLists] = useState(0)
   const [selectedIndex, setSelectedIndex] = useState(0)
 
-  useEffect(() => {
-    if ((lists === 0 && id) && id !== '1')
-      navigate('/admin')
-  }, [])
+  // useEffect(() => {
+  //   if ((lists === 0 && id) && id !== '1')
+  //     navigate('/admin')
+  // }, [])
 
   useEffect(() => {
     setLists(problems.length)
@@ -32,6 +31,7 @@ const EditSideBar = () => {
     }
     return result
   }
+
   return (
     <div className='bg-[#3598DB] overflow-y-auto w-1/5 min-h-screen'>
       <div className='pt-28 px-6'>
@@ -40,7 +40,7 @@ const EditSideBar = () => {
           {
             getQuestions()
           }
-          <UpdateButton/>
+          <UpdateButton />
         </div>
       </div>
     </div>

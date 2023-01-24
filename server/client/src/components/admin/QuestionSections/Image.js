@@ -47,7 +47,7 @@ const Image = () => {
         types={fileTypes}
         children={
           <div className='flex flex-col justify-center items-center'>
-            <img src={url} alt='mainImage' className='-mb-14' />
+            <img src={url} alt='mainImage' className='-mb-14 w-[701px] h-[423px]' />
             <div>
               <img className='cursor-pointer inline-block' src='/assets/icons/Upload Cloud.png' htmlFor='upload' alt='uploadImage' />
               <div>Drag and Drop or <label htmlFor='upload' className='text-[#3A63DE] cursor-pointer'>Browse</label> to upload</div>

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import CreateButton from '../Common/Create'
 import SaveButton from './Save'
 import QuestionButton from '../Common/Question'
-import { useSelector, useDispatch } from 'react-redux'
-import { getProblems } from '../../../actions/problem'
+import { useSelector } from 'react-redux'
 
 const AddSideBar = () => {
   const { id } = useParams()

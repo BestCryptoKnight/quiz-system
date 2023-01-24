@@ -43,8 +43,8 @@ const Preview = () => {
       </div>
       <div>
         <div className='flex flex-row w-full h-screen'>
-          <div className='flex justify-center items-center w-1/2'>
-            <img className='px-20 py-30 min-w-[701px] w-[801px]' src={problem.image ? url : '/assets/icons/Main Image.png'} alt='test_image' />
+          <div className='flex justify-center items-center -mt-32 w-1/2'>
+            <img className='w-[701px] h-[423px]' src={problem.image ? url : '/assets/icons/Main Image.png'} alt='test_image' />
           </div>
           <div className='flex flex-col gap-10 w-1/2 px-10'>
             <div className='mt-20 text-[32px] text-gray-500'>

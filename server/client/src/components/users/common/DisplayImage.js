@@ -1,14 +1,16 @@
-const DisplayImage = ({ total = '', images = [] }) => {
+import Avatar from 'react-avatar'
+
+const DisplayImage = ({ total = '', users = [] }) => {
   let display
   if (total > 5) {
-    let subImages = []
+    let subUsers = []
     for (let i = 0; i < 4; i++)
-      subImages.push(images[i])
+      subUsers.push(users[i])
     const extraNum = total - 4
     display = (
       <div className='flex justify-end min-w-[150px] -space-x-2 overflow-hidden'>
-        {subImages.map((image, key) =>
-          <img className="inline-block h-8 w-8 rounded-full ring-2 ring-white" src={image} alt="" key={key} />)}
+        {subUsers.map((user, key) =>
+          <Avatar className="inline-block h-8 w-8 rounded-full ring-2 ring-white" size='30' name={user.name} src={user.image} alt="" key={key} />)}
         <div className='flex h-8 w-8 rounded-full ring-2 ring-white bg-[#3598DB] text-white font-medium text-center justify-center items-center'>{extraNum}+</div>
       </div>)
   }
@@ -16,8 +18,8 @@ const DisplayImage = ({ total = '', images = [] }) => {
     display = (
       <div className='flex justify-end min-w-[150px] -space-x-2 overflow-hidden'>
         {
-          images.map((image, key) =>
-            <img className="inline-block h-8 w-8 rounded-full ring-2 ring-white" src={image} alt="" key={key} />)
+          users.map((user, key) =>
+            <Avatar className="inline-block h-8 w-8 rounded-full ring-2 ring-white" size='30' name={user.name} src={user.image} alt="" key={key} />)
         }
       </div>
     )

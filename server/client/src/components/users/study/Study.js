@@ -10,6 +10,7 @@ import { addAnswer, increaseCheatNum } from '../../../actions/answer'
 import { getStudyData } from '../../../apis/test.api'
 import { useAuth } from '../../../contexts/AuthContext'
 import VideoPlayer from '../common/Video'
+import Avatar from 'react-avatar'
 
 const DisplayButton = ({ num = '', pageId, visited = '', correct = '' }) => {
 
@@ -53,7 +54,7 @@ const StudyButton = ({ name = '', onClick, checked }) => {
   )
 }
 
-const ChoiceButton = ({ name = '', content = '', answer = '', choice, setChoice, removed, userNum = '', images = '', totalUser }) => {
+const ChoiceButton = ({ name = '', content = '', answer = '', choice, setChoice, removed, userNum = '', users = '', totalUser }) => {
   const { account } = useAuth();
   const buttonClick = () => {
     if (choice === '') {
@@ -78,32 +79,32 @@ const ChoiceButton = ({ name = '', content = '', answer = '', choice, setChoice,
   let imageString2;
   let images2 = [];
 
-  images2.push(account.image)
-  for (let i = 0; i < images.length; i++) {
-    images2.push(images[i])
+  images2.push({name: account.name, image: account.image})
+  for (let i = 0; i < users.length; i++) {
+    images2.push(users[i])
   }
 
-  if (images.length > 5) {
+  if (users.length > 5) {
     let subImages1 = []
     let subImages2 = []
     for (let i = 0; i < 4; i++)
-      subImages1.push(images[i])
+      subImages1.push(users[i])
 
     for (let i = 0; i < 4; i++)
       subImages2.push(images2[i])
 
-    const extraNum = images.length - 4
+    const extraNum = users.length - 4
     imageString1 = (
       <div className='flex flex-row min-w-fit -space-x-2 overflow-hidden'>
-        {subImages1.map((image, key) =>
-          <img className="inline-block h-8 w-8 rounded-full ring-2 ring-white" src={image} alt="" key={key} />)}
+        {subImages1.map((user, key) =>
+          <Avatar className="inline-block h-8 w-8 rounded-full ring-2 ring-white" size='30' name={user.name} src={user.image} alt="" key={key} />)}
         <div className='flex h-8 w-8 rounded-full ring-2 ring-white bg-[#3598DB] text-white font-medium text-center justify-center items-center'>{extraNum}+</div>
       </div>)
 
     imageString2 = (
       <div className='flex flex-row min-w-fit -space-x-2 overflow-hidden'>
-        {subImages2.map((image, key) =>
-          <img className="inline-block h-8 w-8 rounded-full ring-2 ring-white" src={image} alt="" key={key} />)}
+        {subImages2.map((user, key) =>
+          <Avatar className="inline-block h-8 w-8 rounded-full ring-2 ring-white" size='30' name={user.name} src={user.image} alt="" key={key} />)}
         <div className='flex h-8 w-8 rounded-full ring-2 ring-white bg-[#3598DB] text-white font-medium text-center justify-center items-center'>{extraNum}+</div>
       </div>)
   }
@@ -136,28 +137,28 @@ const ChoiceButton = ({ name = '', content = '', answer = '', choice, setChoice,
                   <div className='flex flex-col float-right right-0 min-w-fit'>
                     <div className="-space-x-2 overflow-hidden">
                       {
-                        images.length > 5 ?
+                        users.length > 5 ?
                           choice === name ?
                             imageString2
                             :
                             imageString1
                           :
                           choice === name ?
-                            images2.map((image, key) =>
-                              <img className="inline-block h-8 w-8 rounded-full ring-2 ring-white" src={image} alt="" key={key} />)
+                            images2.map((user, key) =>
+                              <Avatar className="inline-block h-8 w-8 rounded-full ring-2 ring-white" size='30' name={user.name} src={user.image} alt="" key={key} />)
                             :
-                            images.map((image, key) =>
-                              <img className="inline-block h-8 w-8 rounded-full ring-2 ring-white" src={image} alt="" key={key} />)
+                            users.map((user, key) =>
+                              <Avatar className="inline-block h-8 w-8 rounded-full ring-2 ring-white" size='30' name={user.name} src={user.image} alt="" key={key} />)
                       }
                     </div>
                     {
                       choice === name ?
                         <div className='text-center'>
-                          {Math.floor((userNum || 0 + 1) / (totalUser || 0 + 1) * 100)}%
+                          {Math.floor(((userNum || 0) + 1) / ((totalUser || 0) + 1) * 100)}%
                         </div>
                         :
                         <div className='text-center'>
-                          {Math.floor(userNum || 0 / (totalUser || 0 + 1) * 100)}%
+                          {Math.floor((userNum || 0) / ((totalUser || 0) + 1) * 100)}%
                         </div>
                     }
                   </div>
@@ -165,9 +166,9 @@ const ChoiceButton = ({ name = '', content = '', answer = '', choice, setChoice,
                 <div className='relative flex items-center h-32'>
                   {
                     choice === name ?
-                      <div className='bg-[#DBDB3559] absolute h-full' style={{ width: `${Math.floor((userNum || 0 + 1) / (totalUser || 0 + 1) * 100)}%` }} />
+                      <div className='bg-[#DBDB3559] absolute h-full' style={{ width: `${Math.floor(((userNum || 0) + 1) / ((totalUser || 0) + 1) * 100)}%` }} />
                       :
-                      <div className='bg-[#DBDB3559] absolute h-full' style={{ width: `${Math.floor(userNum || 0 / (totalUser || 0 + 1) * 100)}%` }} />
+                      <div className='bg-[#DBDB3559] absolute h-full' style={{ width: `${Math.floor((userNum || 0) / ((totalUser || 0) + 1) * 100)}%` }} />
                   }
                   <div className='pl-10 text-gray-500 text-[28px]'>{content}</div>
                 </div>
@@ -333,6 +334,7 @@ const Study = () => {
     }
   }
 
+  console.log('currentData: ', currentData)
   return (
     <>
       <Top id={id} />
@@ -347,7 +349,7 @@ const Study = () => {
                     <StudyButton name='la he adivinado' onClick={onGuessClick} checked={isGuessChecked} />
                     <StudyButton name='de memoria' onClick={onMemoryClick} checked={isMemoryChecked} />
                   </div>
-                  <img className='min-w-[701px] py-3' src={currentData.image} alt='test_image' />
+                  <img className='my-3 w-[701px] h-[423px]' src={currentData.image} alt='test_image' />
                   <div className='flex flex-row gap-5'>
                     <div className='flex flex-row bg-[#3598DB] space-x-5 py-4 w-52 rounded-xl items-center justify-center cursor-pointer' onClick={onVideoClick}>
                       <img src='/assets/icons/Group 88.png' alt='video' />
@@ -373,7 +375,7 @@ const Study = () => {
                     removed={cheatText.includes('choice1') ? true : false}
                     userNum={currentData.history ? currentData.history[0]?.userNum : 0}
                     totalUser={currentData.totalUser}
-                    images={currentData.history ? currentData.history[0].images : []}
+                    users={currentData.history ? currentData.history[0].users : []}
                   />
                   <ChoiceButton
                     name='choice2'
@@ -384,7 +386,7 @@ const Study = () => {
                     removed={cheatText.includes('choice2') ? true : false}
                     userNum={currentData.history ? currentData.history[1]?.userNum : 0}
                     totalUser={currentData.totalUser}
-                    images={currentData.history ? currentData.history[1]?.images : []}
+                    users={currentData.history ? currentData.history[1]?.users : []}
                   />
                   <ChoiceButton
                     name='choice3'
@@ -395,7 +397,7 @@ const Study = () => {
                     removed={cheatText.includes('choice3') ? true : false}
                     userNum={currentData.history ? currentData.history[2]?.userNum : 0}
                     totalUser={currentData.totalUser}
-                    images={currentData.history ? currentData.history[2]?.images : []}
+                    users={currentData.history ? currentData.history[2]?.users : []}
                   />
                   {
                     currentData.choice4 ?
@@ -408,7 +410,7 @@ const Study = () => {
                         removed={cheatText.includes('choice4') ? true : false}
                         userNum={currentData.history ? currentData.history[3]?.userNum : 0}
                         totalUser={currentData.totalUser}
-                        images={currentData.history ? currentData.history[3]?.images : []}
+                        users={currentData.history ? currentData.history[3]?.users : []}
                       />
                       :
                       <></>

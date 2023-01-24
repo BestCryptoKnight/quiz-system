@@ -4,9 +4,9 @@ import toast from 'react-hot-toast'
 import { setIndex, setTopNum } from '../../../../actions/test'
 import { useDispatch } from 'react-redux'
 import { displayNum } from '../../../../utils/display'
+import Avatar from 'react-avatar'
 
 const StatusCircle = ({ result = {} }) => {
-  console.log(result)
   return (
     <>
       {
@@ -101,16 +101,16 @@ const TodoTest = ({ test = '', no = '' }) => {
     toast.success('details')
   }
 
-  if (test.images) {
-    if (test.images.length > 5) {
-      let subImages = []
+  if (test.users) {
+    if (test.totalUsers > 5) {
+      let subUsers = []
       for (let i = 0; i < 4; i++)
-        subImages.push(test.images[i])
+        subUsers.push(test.users[i])
 
-      const extraNum = test.images.length - 4
+      const extraNum = test.totalUsers - 4
       imageString = (<>
-        {subImages.map((image, key) =>
-          <img className="inline-block h-8 w-8 rounded-full ring-2 ring-white" src={image} alt="" key={key} />)}
+        {subUsers.map((user, key) =>
+          <Avatar className="inline-block h-8 w-8 rounded-full ring-2 ring-white" size='30' name = {user.name} src={user.image} alt="" key={key} />)}
         <div className='flex h-8 w-8 rounded-full ring-2 ring-white bg-[#3598DB] text-white font-medium text-center justify-center items-center'>{extraNum}+</div>
       </>)
     }
@@ -192,12 +192,12 @@ const TodoTest = ({ test = '', no = '' }) => {
         </div>
         <div className="flex justify-end -space-x-2 overflow-hidden min-w-[100px]">
           {
-            test.images ?
-              test.images.length > 5 ?
+            test.users ?
+              test.totalUsers > 5 ?
                 imageString
                 :
-                test.images.map((image, key) =>
-                  <img className="inline-block h-8 w-8 rounded-full ring-2 ring-white" src={image} alt="" key={key} />)
+                test.users.map((user, key) =>
+                  <Avatar className="inline-block h-8 w-8 rounded-full ring-2 ring-white" size='30' name={user.name} src={user.image} alt="" key={key} />)
               : <></>
           }
         </div>

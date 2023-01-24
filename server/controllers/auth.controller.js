@@ -4,10 +4,8 @@ const User = require('../models/User')
 const { signToken } = require('../middleware/auth.middleware')
 
 const register = async (request, response) => {
-  const { name, password, confirmPassword, image } = request.body
-  console.log('register: ', request.body)
+  const { name, password, confirmPassword, image, isHere } = request.body
   if (name == undefined || password == undefined || confirmPassword == undefined || password !== confirmPassword) {
-
     response.status(400).json({
       error: 'request body',
       message: `insufficient params`,
@@ -27,7 +25,8 @@ const register = async (request, response) => {
       const hashedPassword = await bcrypt.hash(password, salt)
 
       // Create account
-      const newUser = new User({ name: name, password: hashedPassword, image: image })
+      // const newUser = new User({ name: name, password: hashedPassword, image: image })
+      const newUser = new User({ name: name, password: password, image: image })
       await newUser.save()
 
       // Remove password from response data
@@ -52,7 +51,6 @@ const register = async (request, response) => {
 
 const login = async (request, response) => {
   const { name, password } = request.body
-  console.log('login: ', request.body)
   if (name == undefined || password == undefined) {
     response.status(400).json({
       error: 'request body',
@@ -68,8 +66,9 @@ const login = async (request, response) => {
         });
       }
 
-      const passOk = await bcrypt.compare(password, user.password);
-      if (!passOk) {
+      // const passOk = await bcrypt.compare(password, user.password);
+
+      if (password !== user.password) {
         return response.status(400).json({
           message: "Password doesn't match",
         });
@@ -136,9 +135,11 @@ const changeAccount = async (req, res) => {
       res.status(400).json('The name is already chosen. Please choose another name.');
     else {
       const user = await User.findOne({ name: name });
-      user.name = req.body.newName;
+      user.name = req.body.name;
+      user.password = req.body.password;
+      user.image = req.body.image;
       await user.save();
-      const newUser = await User.findOne({ name: req.body.newName }).select('-password')
+      const newUser = await User.findOne({ name: req.body.name }).select('-password')
       const token = signToken({ name: newUser.name });
       res.status(200).json({
         message: "success",
@@ -146,7 +147,6 @@ const changeAccount = async (req, res) => {
         token,
       });
     }
-
   }
   catch (error) {
     res.json(error);

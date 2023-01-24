@@ -6,9 +6,13 @@ import { useAuth } from '../../../../contexts/AuthContext'
 const Sidebar = () => {
   const navigate = useNavigate()
   const {logout} = useAuth()
-  const onClick = () => {
+  const onClickLogout = () => {
     logout()
     navigate('/')
+  }
+  const onClickRegister = () => {
+    console.log('Register')
+    navigate('/register-student')
   }
   return (
     <div className='adminsidebar'>
@@ -16,7 +20,7 @@ const Sidebar = () => {
         <div className='sidebar-logo' />
         <div className='sidebar-menu'>
           <div className='sidebar-menu-container'>
-            <div className='sidebar-menu-item' onClick={onClick}>
+            <div className='sidebar-menu-item' onClick={onClickLogout}>
               <img src='/assets/icons/Entradas.png' alt='entradas' />
             </div>
             <div className='sidebar-menu-item'>
@@ -35,7 +39,7 @@ const Sidebar = () => {
             <div className='sidebar-menu-item'>
               <img src='/assets/icons/test unico.png' alt='Test unico' />
             </div>
-            <div className='sidebar-menu-item'>
+            <div className='sidebar-menu-item' onClick = {onClickRegister}>
               <img src='/assets/icons/Inscribir.png' alt='Inscribir estudiante' />
             </div>
             <div className='sidebar-menu-item'>

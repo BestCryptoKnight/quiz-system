@@ -134,16 +134,23 @@ const readTestData = async (req, res) => {
       // Get Participants
       if (histories.length) {
         let users = []
-        let images = []
         for (let j = 0; j < histories.length; j++) {
-          if (!users.includes(histories[j].name)) {
-            users.push(histories[j].name)
-            images.push(histories[j].image)
+          let sameFlag = false
+          for(let k = 0; k< users.length; k++){
+            if (users[k].name === histories[j].name) {
+              sameFlag = true
+            }
+          }
+          if(!sameFlag){
+            let userData = {
+              name: histories[j].name,
+              image: histories[j].image,
+            }
+            users.push(userData)
           }
         }
         newItem.totalUsers = users.length
         newItem.users = users
-        newItem.images = images
       }
 
       // Get User History
@@ -197,7 +204,7 @@ const readStudyData = async (req, res) => {
     let studyData = [] // Study Datas
     let participants = {
       total: 0,
-      images: []
+      users: []
     }
     let returnData = {
       participants: {},
@@ -216,17 +223,26 @@ const readStudyData = async (req, res) => {
     // Get Study Datas
     if (historyData.length) {
       // participants
-      let newImageData = [];
+      let newParticipantData = [];
       for(let i = 0; i<historyData.length; i++){
-        if(!newImageData.includes(historyData[i].image)){
-          newImageData.push(historyData[i].image)
+        let sameFlag = false;
+        for(let k=0; k< newParticipantData.length; k++){
+          if(newParticipantData.name === historyData[i].name)
+            sameFlag = true
+        }
+        if(!sameFlag){
+          let newEntry = {
+            name: historyData[i].name,
+            image: historyData[i].image,
+          }
+          newParticipantData.push(newEntry)
         }
       }
-      const imageLength = newImageData.length > 5 ? 5 : newImageData.length
-      for(let i=0; i<imageLength; i++){
-        participants.images.push(newImageData[i])
+      const participantLength = newParticipantData.length > 5 ? 5 : newParticipantData.length
+      for(let i=0; i<participantLength; i++){
+        participants.users.push(newParticipantData[i])
       }
-      participants.total = newImageData.length
+      participants.total = newParticipantData.length
       // study data
       const totalLength = historyData.length
       for (let i = 0; i < datas.length; i++) {
@@ -235,25 +251,21 @@ const readStudyData = async (req, res) => {
           choice: 'choice1',
           userNum: 0,
           users: [],
-          images: [],
           percentage: 0,
         }, {
           choice: 'choice2',
           userNum: 0,
           users: [],
-          images: [],
           percentage: 0,
         }, {
           choice: 'choice3',
           userNum: 0,
           users: [],
-          images: [],
           percentage: 0,
         }, {
           choice: 'choice4',
           userNum: 0,
           users: [],
-          images: [],
           percentage: 0,
         }]
 
@@ -262,9 +274,13 @@ const readStudyData = async (req, res) => {
           const num = choice.slice(6, 7)
           const name = historyData[j].name
           const image = historyData[j].image
-          if (!histories[Number(num) - 1].users.includes(name)) {
-            histories[Number(num) - 1].users.push(name)
-            histories[Number(num) - 1].images.push(image)
+          let compareFlag = false
+          for (let k = 0; k < histories[Number(num) - 1].users.length; k++){
+            if (histories[Number(num) - 1].users.name === name)
+              compareFlag = true;
+          }
+          if (!compareFlag) {
+            histories[Number(num) - 1].users.push({name: name, image: image})
           }
           histories[Number(num) - 1].userNum++
           histories[Number(num) - 1].percentage = Math.floor(histories[Number(num) - 1].userNum / totalLength * 100)

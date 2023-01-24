@@ -15,7 +15,7 @@ fields.forEach(field => fieldsState[field.id] = '');
 export default function Signup() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState(fieldsState);
-  const [avatar, setAvatar] = useState('/assets/emotions/avatar1.png')
+  const [avatar, setAvatar] = useState('/assets/emotions/avatar1.png');
   const { isLoggedIn, register } = useAuth();
   const [showModal, setShowModal] = useState(false)
 
@@ -28,17 +28,13 @@ export default function Signup() {
   const handleChange = (e) => setFormData({ ...formData, [e.target.id]: e.target.value });
 
   const handleClick = async () => {
-    if (formData.image === '' || formData.image === undefined) {
-      toast.error('Please upload the Avatar.')
-    }
+    if (formData.name === '' || formData.password === '' || formData.confirmPassword === '')
+      toast.error('Fill all the blanks')
+    else if (formData.password !== formData.confirmPassword)
+      toast.error("Password doesn't match")
     else {
-      if (formData.name === '' || formData.password === '' || formData.confirmPassword === '')
-        toast.error('Fill all the blanks')
-      else if (formData.password !== formData.confirmPassword)
-        toast.error("Password doesn't match")
-      else {
-        await register(formData)
-      }
+      console.log('formData: ', formData)
+      await register(formData)
     }
   }
 

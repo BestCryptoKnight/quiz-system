@@ -11,7 +11,7 @@ router.post('/register', [uploadAvatar], authController.register)
 
 router.post('/login', authController.login)
 
-router.post('/changeAccount', [authorizeBearerToken], authController.changeAccount)
+router.post('/changeAccount', [authorizeBearerToken], [uploadAvatar], authController.changeAccount)
 
 router.post('/changePassword', [authorizeBearerToken], authController.changePassword)
 

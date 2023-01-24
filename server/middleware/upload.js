@@ -1,4 +1,4 @@
-const sharp = require('sharp')
+// const sharp = require('sharp')
 
 const uploadImage = async (req, res, next) => {
 
@@ -16,27 +16,27 @@ const uploadImage = async (req, res, next) => {
           const path = `${__dirname}/../client/public${suffixUrl}`
           const path1 = `${__dirname}/../files/${Date.now()}-driving-${file.name}`
 
-          // await file.mv(path, (err) => {
-          //   if (err) {
-          //     console.log(err)
-          //     return res.status(500).send(err);
-          //   }
-          //   else {
-          //     console.log('asdfsdfs')
+          await file.mv(path, (err) => {
+            if (err) {
+              console.log(err)
+              return res.status(500).send(err);
+            }
+            else {
+              console.log('asdfsdfs')
+              req.body[key] = suffixUrl
+              resolve(true);
+            }
+          });
+
+          // sharp(file.data)
+          //   .resize({width : 701, height: 423, fit: 'fill'})
+          //   .toFormat("jpeg")
+          //   .jpeg({ quality: 90 })
+          //   .toFile(`${path}`
+          //   );     
+
           // req.body[key] = suffixUrl
           // resolve(true);
-          //   }
-          // });
-
-          sharp(file.data)
-            .resize({width : 701, height: 423, fit: 'fill'})
-            .toFormat("jpeg")
-            .jpeg({ quality: 90 })
-            .toFile(`${path}`
-            );     
-            
-        req.body[key] = suffixUrl
-        resolve(true);
         })
       }))
     next()
