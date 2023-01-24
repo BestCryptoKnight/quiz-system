@@ -17,7 +17,7 @@ export default function Login() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      if (account.name === 'admin')
+      if (account.name === 'administrator')
         navigate('/admin')
       else
         navigate('/user/todotest')
