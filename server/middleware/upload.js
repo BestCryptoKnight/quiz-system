@@ -13,7 +13,7 @@ const uploadImage = async (req, res, next) => {
           const file = req.files[key]
 
           const suffixUrl = `/assets/imgs/${Date.now()}-driving-${file.name}`
-          const path = `${__dirname}/../client/public${suffixUrl}`
+          const path = `${__dirname}/../client/build${suffixUrl}`
           const path1 = `${__dirname}/../files/${Date.now()}-driving-${file.name}`
 
           await file.mv(path, (err) => {

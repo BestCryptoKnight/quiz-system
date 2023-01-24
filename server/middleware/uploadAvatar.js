@@ -6,7 +6,7 @@ const uploadAvatar = async (req, res, next) => {
           const file = req.files[key]
 
           const suffixUrl = `/assets/avatars/${Date.now()}-avatar-${file.name}.png`
-          const path = `${__dirname}/../client/public${suffixUrl}`
+          const path = `${__dirname}/../client/build${suffixUrl}`
 
           await file.mv(path, (err) => {
             if (err) {
